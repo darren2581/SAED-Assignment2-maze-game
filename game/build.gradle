@@ -1,0 +1,36 @@
+plugins {
+    id 'application'
+    id 'antlr'
+}
+
+dependencies {
+    implementation project(':api')
+    antlr 'org.antlr:antlr4:4.13.1'
+    implementation 'org.antlr:antlr4-runtime:4.13.1'
+    implementation 'org.python:jython-standalone:2.7.3'
+}
+
+application {
+    mainClass = 'edu.curtin.game.Main'
+}
+
+generateGrammarSource {
+    maxHeapSize = '64m'
+    arguments += ['-visitor', '-long-messages', '-package', 'edu.curtin.game.parser']
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs += ["${buildDir}/generated-src/antlr/main"]
+        }
+    }
+}
+
+compileJava {
+    dependsOn generateGrammarSource
+}
+
+run {
+    standardInput = System.in
+}

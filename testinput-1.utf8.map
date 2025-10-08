@@ -1,0 +1,53 @@
+size (5,8)
+start   (
+ 4   ,  0)   goal (1,2)
+plugin bF.bBW
+
+obstacle   {   at  (  4 ,
+5) requires  "charmed sword" } item "charmed sword" {
+  at (1,2)
+  message "hCl{L1Uhk"
+}
+
+plugin TQVzh.XgP.dh.NzWqa
+
+obstacle {
+  at (0,1)
+  requires "charmed sword"
+}
+
+obstacle {
+  at (0,6), (1,5)
+  requires "charmed sword"
+}
+
+script !{
+ulhuhpC1m,ZVm$yX1(Teb{\&:O-7gJ&%z"C
+$QViy>SdC>S@-O%$u8
+}
+
+obstacle {
+  at (3,0)
+  requires "charmed sword"
+}
+
+obstacle {
+  at (1,4)
+  requires "charmed sword"
+}
+
+script !{
+3he]E68z'>AmKh>?ZI
+F!i1y5<43_>H8
+}
+
+obstacle {
+  at (4,3), (3,1)
+  requires "charmed sword"
+}
+
+obstacle {
+  at (2,7), (0,0), (0,2)
+  requires "charmed sword"
+}
+

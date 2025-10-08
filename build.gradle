@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id 'pmd'
+}
+
+allprojects {
+    group = 'edu.curtin'
+    version = '1.0.0'
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'pmd'
+
+    repositories {
+        mavenCentral()
+    }
+
+    sourceCompatibility = 17
+    targetCompatibility = 17
+
+    pmd {
+        consoleOutput = true
+        toolVersion = '6.55.0'
+        ruleSetFiles = files("${rootProject.projectDir}/saed-pmd-rules.xml")
+        ruleSets = []
+        ignoreFailures = true
+    }
+
+    dependencies {
+        testImplementation 'junit:junit:4.13.2'
+    }
+}

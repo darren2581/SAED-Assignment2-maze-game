@@ -1,0 +1,41 @@
+size (17,19)
+start (7,16)
+goal (10,18)
+plugin Ni.ITTgl.XIBJc.ANwkn.It
+
+item "turquoise case" {
+  at (2,18), (4,17), (5,13)
+  message "reXnK"
+}
+
+plugin ECNm.jSzOA.CQr.rA.eu.FU
+
+item "scuffed blue boot" {
+  at (10,0), (12,16), (3,2)
+  message "JrFcOdJ"
+}
+
+item "sublime cloak" {
+  at (6,13)
+  message "VXUPk+f"
+}
+
+plugin YM.gR.DJ.hzXt.Jan.nY
+
+script !{
+hMJ`m6f]dOhV>)!kPf
+'>;;%s[*:!fAFkQH _1A^{c
+}
+
+plugin NyP.BhS.gTptZ.ZwQJm.RF
+
+item "forged gauntlet" {
+  at (2,1)
+  message "cPq*1"
+}
+
+obstacle {
+  at (1,16), (12,3), (7,12), (15,10), (5,1), (13,11), (13,4), (11,12), (12,18), (11,2), (9,13), (1,0), (5,18), (12,1), (6,2), (3,4), (15,6), (15,0), (16,12), (13,16), (10,4), (14,0), (11,7), (5,17), (0,10), (11,8), (7,3), (10,1), (8,5), (12,12), (4,12), (14,4), (9,3), (2,11), (10,5), (5,3), (13,12), (13,0), (1,11), (3,10), (8,7), (14,8), (16,7), (15,13), (16,6), (8,6), (10,13), (4,18), (0,8), (6,0), (7,2), (2,9), (1,6), (7,6), (5,6), (0,11), (12,17), (8,14), (7,11), (6,10), (16,9)
+  requires "turquoise case"
+}
+

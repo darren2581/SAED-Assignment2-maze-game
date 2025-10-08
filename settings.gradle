@@ -1,0 +1,8 @@
+rootProject.name = 'maze-game'
+
+include 'api'
+include 'game'
+include 'plugins:teleport'
+include 'plugins:penalty'
+include 'plugins:reveal'
+include 'plugins:prize'
