@@ -1,0 +1,1 @@
+./gradlew run --args="../input.utf8.map"
