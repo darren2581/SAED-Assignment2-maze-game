@@ -103,10 +103,14 @@ public class Game implements GameAPI {
                 if (plugin instanceof Callback) {
                     callbacks.add((Callback) plugin);
                 }
+            } catch (ClassNotFoundException e) {
+                // Plugin class not found - log but continue
+                System.err.println("Warning: Plugin class not found: " + className);
             } catch (Exception e) {
-                // Handle any errors during plugin loading
-                System.err.println("Failed to load plugin: " + className);
-                e.printStackTrace();
+                // Handle any other errors during plugin loading
+                System.err.println("Warning: Failed to load plugin: " + className);
+                // Only print stack trace in debug mode
+                // e.printStackTrace();
             }
         }
 
@@ -119,8 +123,9 @@ public class Game implements GameAPI {
                 scriptEngine.executeScript(script);
             } catch (Exception e) {
                 // Handle any errors during script execution
-                System.err.println("Failed to execute script");
-                e.printStackTrace();
+                System.err.println("Warning: Failed to execute script (invalid Python syntax)");
+                // Only print stack trace in debug mode
+                // e.printStackTrace();
             }
         }
     }

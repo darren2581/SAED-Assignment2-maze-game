@@ -1,7 +1,19 @@
 grammar MapFile;
 
+// Parser Rules
+
 mapFile
-    : sizeDecl startDecl goalDecl declaration* EOF
+    : declaration+ EOF
+    ;
+
+declaration
+    : sizeDecl
+    | startDecl
+    | goalDecl
+    | itemDecl
+    | obstacleDecl
+    | pluginDecl
+    | scriptDecl
     ;
 
 sizeDecl
@@ -14,13 +26,6 @@ startDecl
 
 goalDecl
     : 'goal' coords
-    ;
-
-declaration
-    : itemDecl
-    | obstacleDecl
-    | pluginDecl
-    | scriptDecl
     ;
 
 itemDecl
@@ -64,22 +69,24 @@ stringList
     ;
 
 qualifiedName
-    : IDENTIFIER ('.' IDENTIFIER)*
+    : ID ('.' ID)*
     ;
 
-STRING
-    : '"' ~["\r\n]* '"'
-    ;
+// Lexer Rules
 
 SCRIPT_BLOCK
     : '!{' .*? '}'
+    ;
+
+STRING
+    : '"' ~["]* '"'
     ;
 
 INT
     : [0-9]+
     ;
 
-IDENTIFIER
+ID
     : [a-zA-Z_][a-zA-Z0-9_]*
     ;
 
@@ -89,4 +96,8 @@ WS
 
 COMMENT
     : '//' ~[\r\n]* -> skip
+    ;
+
+BLOCK_COMMENT
+    : '/*' .*? '*/' -> skip
     ;

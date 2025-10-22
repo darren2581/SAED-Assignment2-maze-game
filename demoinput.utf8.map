@@ -1,0 +1,165 @@
+// Demo input file for maze game
+// This file demonstrates all features: items, obstacles, plugins, and scripts
+
+size (10, 10)
+start (0, 0)
+goal (9, 9)
+
+// Items
+item "Wooden Sword" {
+    at (1, 1), (2, 3)
+    message "A sturdy weapon for your journey."
+}
+
+item "Magic Map" {
+    at (5, 5)
+    message "This map reveals hidden secrets!"
+}
+
+item "Golden Key" {
+    at (3, 7)
+    message "Opens many doors."
+}
+
+item "Quick Reflexes" {
+    at (7, 2)
+    message "Helps you move faster!"
+}
+
+item "Ancient Scroll" {
+    at (4, 4)
+    message "Contains ancient wisdom."
+}
+
+// Obstacles
+obstacle {
+    at (2, 0), (3, 3)
+    requires "Wooden Sword"
+}
+
+obstacle {
+    at (6, 6), (7, 7)
+    requires "Golden Key"
+}
+
+obstacle {
+    at (8, 8)
+    requires "Wooden Sword", "Golden Key"
+}
+
+// Load Java plugins (Teleport and Reveal)
+plugin edu.curtin.gameplugins.Teleport
+plugin edu.curtin.gameplugins.Reveal
+
+// Python script for Penalty (creates obstacles if player is too slow)
+script !{
+from edu.curtin.game.api import Callback, Location, Obstacle
+import java.lang.System as System
+import java.util.Arrays as Arrays
+import java.util.ArrayList as ArrayList
+import random
+
+class PenaltyCallback(Callback):
+  def __init__(self):
+    self.last_move_time = System.currentTimeMillis()
+    self.PENALTY_THRESHOLD = 5000
+
+  def onPlayerMove(self, direction):
+    current_time = System.currentTimeMillis()
+    time_taken = current_time - self.last_move_time
+    if time_taken > self.PENALTY_THRESHOLD:
+      self.create_penalty_obstacle()
+    self.last_move_time = current_time
+
+  def create_penalty_obstacle(self):
+    player = api.getPlayer()
+    grid = api.getGrid()
+    player_loc = player.getLocation()
+    directions = [[-1, 0], [1, 0], [0, -1], [0, 1]]
+    valid_locations = ArrayList()
+    for d in directions:
+      new_row = player_loc.getRow() + d[0]
+      new_col = player_loc.getCol() + d[1]
+      if new_row >= 0 and new_row < grid.getRows() and new_col >= 0 and new_col < grid.getColumns():
+        loc = Location(new_row, new_col)
+        square = grid.getSquare(loc)
+        if square.isEmpty():
+          valid_locations.add(loc)
+    if valid_locations.size() > 0:
+      penalty_loc = valid_locations.get(random.randint(0, valid_locations.size() - 1))
+      required_items = Arrays.asList(["Quick Reflexes"])
+      penalty_obstacle = Obstacle(required_items)
+      square = grid.getSquare(penalty_loc)
+      square.setObstacle(penalty_obstacle)
+      print "WARNING: Too slow! Penalty obstacle at (" + str(penalty_loc.getRow()) + ", " + str(penalty_loc.getCol()) + ")!"
+
+  def onItemAcquired(self, item_name):
+    pass
+
+  def onMenuAction(self):
+    pass
+
+  def getMenuLabel(self):
+    return None
+
+callback = PenaltyCallback()
+api.registerCallback(callback)
+}
+
+// Python script for Prize (awards prize after 5 items/obstacles)
+script !{
+from edu.curtin.game.api import Callback
+
+class PrizeCallback(Callback):
+  def __init__(self):
+    self.item_count = 0
+    self.obstacle_count = 0
+    self.prize_awarded = False
+
+  def onPlayerMove(self, direction):
+    if self.prize_awarded:
+      return
+    player = api.getPlayer()
+    player_loc = player.getLocation()
+    grid = api.getGrid()
+    current_square = grid.getSquare(player_loc)
+    if current_square.getObstacle() is not None:
+      self.obstacle_count = self.obstacle_count + 1
+      self.check_for_prize()
+
+  def onItemAcquired(self, item_name):
+    if self.prize_awarded:
+      return
+    self.item_count = self.item_count + 1
+    self.check_for_prize()
+
+  def check_for_prize(self):
+    total = self.item_count + self.obstacle_count
+    if total >= 5 and not self.prize_awarded:
+      self.award_prize()
+      self.prize_awarded = True
+
+  def award_prize(self):
+    player = api.getPlayer()
+    prize_item = "Golden Trophy of Excellence"
+    player.addItem(prize_item)
+    print "\n" + ("=" * 50)
+    print "ACHIEVEMENT UNLOCKED!"
+    print "Items collected: " + str(self.item_count) + ", Obstacles traversed: " + str(self.obstacle_count)
+    print "You received: " + prize_item
+    print ("=" * 50) + "\n"
+
+  def onMenuAction(self):
+    print "Progress towards prize:"
+    print "  Items collected: " + str(self.item_count)
+    print "  Obstacles traversed: " + str(self.obstacle_count)
+    print "  Total: " + str(self.item_count + self.obstacle_count) + "/5"
+    if self.prize_awarded:
+      print "  Prize already awarded!"
+
+  def getMenuLabel(self):
+    return "Check Prize Progress"
+
+callback = PrizeCallback()
+api.registerCallback(callback)
+}

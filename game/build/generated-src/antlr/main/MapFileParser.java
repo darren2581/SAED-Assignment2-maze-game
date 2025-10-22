@@ -18,16 +18,16 @@ public class MapFileParser extends Parser {
 		new PredictionContextCache();
 	public static final int
 		T__0=1, T__1=2, T__2=3, T__3=4, T__4=5, T__5=6, T__6=7, T__7=8, T__8=9, 
-		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, STRING=17, 
-		SCRIPT_BLOCK=18, INT=19, IDENTIFIER=20, WS=21, COMMENT=22;
+		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, SCRIPT_BLOCK=17, 
+		STRING=18, INT=19, ID=20, WS=21, COMMENT=22, BLOCK_COMMENT=23;
 	public static final int
-		RULE_mapFile = 0, RULE_sizeDecl = 1, RULE_startDecl = 2, RULE_goalDecl = 3, 
-		RULE_declaration = 4, RULE_itemDecl = 5, RULE_obstacleDecl = 6, RULE_pluginDecl = 7, 
+		RULE_mapFile = 0, RULE_declaration = 1, RULE_sizeDecl = 2, RULE_startDecl = 3, 
+		RULE_goalDecl = 4, RULE_itemDecl = 5, RULE_obstacleDecl = 6, RULE_pluginDecl = 7, 
 		RULE_scriptDecl = 8, RULE_atDecl = 9, RULE_messageDecl = 10, RULE_requiresDecl = 11, 
 		RULE_coords = 12, RULE_coordsList = 13, RULE_stringList = 14, RULE_qualifiedName = 15;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"mapFile", "sizeDecl", "startDecl", "goalDecl", "declaration", "itemDecl", 
+			"mapFile", "declaration", "sizeDecl", "startDecl", "goalDecl", "itemDecl", 
 			"obstacleDecl", "pluginDecl", "scriptDecl", "atDecl", "messageDecl", 
 			"requiresDecl", "coords", "coordsList", "stringList", "qualifiedName"
 		};
@@ -45,8 +45,8 @@ public class MapFileParser extends Parser {
 	private static String[] makeSymbolicNames() {
 		return new String[] {
 			null, null, null, null, null, null, null, null, null, null, null, null, 
-			null, null, null, null, null, "STRING", "SCRIPT_BLOCK", "INT", "IDENTIFIER", 
-			"WS", "COMMENT"
+			null, null, null, null, null, "SCRIPT_BLOCK", "STRING", "INT", "ID", 
+			"WS", "COMMENT", "BLOCK_COMMENT"
 		};
 	}
 	private static final String[] _SYMBOLIC_NAMES = makeSymbolicNames();
@@ -102,15 +102,6 @@ public class MapFileParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class MapFileContext extends ParserRuleContext {
-		public SizeDeclContext sizeDecl() {
-			return getRuleContext(SizeDeclContext.class,0);
-		}
-		public StartDeclContext startDecl() {
-			return getRuleContext(StartDeclContext.class,0);
-		}
-		public GoalDeclContext goalDecl() {
-			return getRuleContext(GoalDeclContext.class,0);
-		}
 		public TerminalNode EOF() { return getToken(MapFileParser.EOF, 0); }
 		public List<DeclarationContext> declaration() {
 			return getRuleContexts(DeclarationContext.class);
@@ -144,28 +135,135 @@ public class MapFileParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(32);
-			sizeDecl();
-			setState(33);
-			startDecl();
-			setState(34);
-			goalDecl();
-			setState(38);
+			setState(33); 
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 912L) != 0)) {
+			do {
 				{
 				{
-				setState(35);
+				setState(32);
 				declaration();
 				}
 				}
-				setState(40);
+				setState(35); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			}
-			setState(41);
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 926L) != 0) );
+			setState(37);
 			match(EOF);
+			}
+		}
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
+	}
+
+	@SuppressWarnings("CheckReturnValue")
+	public static class DeclarationContext extends ParserRuleContext {
+		public SizeDeclContext sizeDecl() {
+			return getRuleContext(SizeDeclContext.class,0);
+		}
+		public StartDeclContext startDecl() {
+			return getRuleContext(StartDeclContext.class,0);
+		}
+		public GoalDeclContext goalDecl() {
+			return getRuleContext(GoalDeclContext.class,0);
+		}
+		public ItemDeclContext itemDecl() {
+			return getRuleContext(ItemDeclContext.class,0);
+		}
+		public ObstacleDeclContext obstacleDecl() {
+			return getRuleContext(ObstacleDeclContext.class,0);
+		}
+		public PluginDeclContext pluginDecl() {
+			return getRuleContext(PluginDeclContext.class,0);
+		}
+		public ScriptDeclContext scriptDecl() {
+			return getRuleContext(ScriptDeclContext.class,0);
+		}
+		public DeclarationContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_declaration; }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MapFileListener ) ((MapFileListener)listener).enterDeclaration(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MapFileListener ) ((MapFileListener)listener).exitDeclaration(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof MapFileVisitor ) return ((MapFileVisitor<? extends T>)visitor).visitDeclaration(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+
+	public final DeclarationContext declaration() throws RecognitionException {
+		DeclarationContext _localctx = new DeclarationContext(_ctx, getState());
+		enterRule(_localctx, 2, RULE_declaration);
+		try {
+			setState(46);
+			_errHandler.sync(this);
+			switch (_input.LA(1)) {
+			case T__0:
+				enterOuterAlt(_localctx, 1);
+				{
+				setState(39);
+				sizeDecl();
+				}
+				break;
+			case T__1:
+				enterOuterAlt(_localctx, 2);
+				{
+				setState(40);
+				startDecl();
+				}
+				break;
+			case T__2:
+				enterOuterAlt(_localctx, 3);
+				{
+				setState(41);
+				goalDecl();
+				}
+				break;
+			case T__3:
+				enterOuterAlt(_localctx, 4);
+				{
+				setState(42);
+				itemDecl();
+				}
+				break;
+			case T__6:
+				enterOuterAlt(_localctx, 5);
+				{
+				setState(43);
+				obstacleDecl();
+				}
+				break;
+			case T__7:
+				enterOuterAlt(_localctx, 6);
+				{
+				setState(44);
+				pluginDecl();
+				}
+				break;
+			case T__8:
+				enterOuterAlt(_localctx, 7);
+				{
+				setState(45);
+				scriptDecl();
+				}
+				break;
+			default:
+				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -205,13 +303,13 @@ public class MapFileParser extends Parser {
 
 	public final SizeDeclContext sizeDecl() throws RecognitionException {
 		SizeDeclContext _localctx = new SizeDeclContext(_ctx, getState());
-		enterRule(_localctx, 2, RULE_sizeDecl);
+		enterRule(_localctx, 4, RULE_sizeDecl);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(43);
+			setState(48);
 			match(T__0);
-			setState(44);
+			setState(49);
 			coords();
 			}
 		}
@@ -252,13 +350,13 @@ public class MapFileParser extends Parser {
 
 	public final StartDeclContext startDecl() throws RecognitionException {
 		StartDeclContext _localctx = new StartDeclContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_startDecl);
+		enterRule(_localctx, 6, RULE_startDecl);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(46);
+			setState(51);
 			match(T__1);
-			setState(47);
+			setState(52);
 			coords();
 			}
 		}
@@ -299,97 +397,14 @@ public class MapFileParser extends Parser {
 
 	public final GoalDeclContext goalDecl() throws RecognitionException {
 		GoalDeclContext _localctx = new GoalDeclContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_goalDecl);
+		enterRule(_localctx, 8, RULE_goalDecl);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(49);
+			setState(54);
 			match(T__2);
-			setState(50);
+			setState(55);
 			coords();
-			}
-		}
-		catch (RecognitionException re) {
-			_localctx.exception = re;
-			_errHandler.reportError(this, re);
-			_errHandler.recover(this, re);
-		}
-		finally {
-			exitRule();
-		}
-		return _localctx;
-	}
-
-	@SuppressWarnings("CheckReturnValue")
-	public static class DeclarationContext extends ParserRuleContext {
-		public ItemDeclContext itemDecl() {
-			return getRuleContext(ItemDeclContext.class,0);
-		}
-		public ObstacleDeclContext obstacleDecl() {
-			return getRuleContext(ObstacleDeclContext.class,0);
-		}
-		public PluginDeclContext pluginDecl() {
-			return getRuleContext(PluginDeclContext.class,0);
-		}
-		public ScriptDeclContext scriptDecl() {
-			return getRuleContext(ScriptDeclContext.class,0);
-		}
-		public DeclarationContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_declaration; }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MapFileListener ) ((MapFileListener)listener).enterDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MapFileListener ) ((MapFileListener)listener).exitDeclaration(this);
-		}
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof MapFileVisitor ) return ((MapFileVisitor<? extends T>)visitor).visitDeclaration(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-
-	public final DeclarationContext declaration() throws RecognitionException {
-		DeclarationContext _localctx = new DeclarationContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_declaration);
-		try {
-			setState(56);
-			_errHandler.sync(this);
-			switch (_input.LA(1)) {
-			case T__3:
-				enterOuterAlt(_localctx, 1);
-				{
-				setState(52);
-				itemDecl();
-				}
-				break;
-			case T__6:
-				enterOuterAlt(_localctx, 2);
-				{
-				setState(53);
-				obstacleDecl();
-				}
-				break;
-			case T__7:
-				enterOuterAlt(_localctx, 3);
-				{
-				setState(54);
-				pluginDecl();
-				}
-				break;
-			case T__8:
-				enterOuterAlt(_localctx, 4);
-				{
-				setState(55);
-				scriptDecl();
-				}
-				break;
-			default:
-				throw new NoViableAltException(this);
 			}
 		}
 		catch (RecognitionException re) {
@@ -437,17 +452,17 @@ public class MapFileParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(58);
+			setState(57);
 			match(T__3);
-			setState(59);
+			setState(58);
 			match(STRING);
-			setState(60);
+			setState(59);
 			match(T__4);
-			setState(61);
+			setState(60);
 			atDecl();
-			setState(62);
+			setState(61);
 			messageDecl();
-			setState(63);
+			setState(62);
 			match(T__5);
 			}
 		}
@@ -495,15 +510,15 @@ public class MapFileParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(65);
+			setState(64);
 			match(T__6);
-			setState(66);
+			setState(65);
 			match(T__4);
-			setState(67);
+			setState(66);
 			atDecl();
-			setState(68);
+			setState(67);
 			requiresDecl();
-			setState(69);
+			setState(68);
 			match(T__5);
 			}
 		}
@@ -548,9 +563,9 @@ public class MapFileParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(71);
+			setState(70);
 			match(T__7);
-			setState(72);
+			setState(71);
 			qualifiedName();
 			}
 		}
@@ -593,9 +608,9 @@ public class MapFileParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(74);
+			setState(73);
 			match(T__8);
-			setState(75);
+			setState(74);
 			match(SCRIPT_BLOCK);
 			}
 		}
@@ -640,9 +655,9 @@ public class MapFileParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(77);
+			setState(76);
 			match(T__9);
-			setState(78);
+			setState(77);
 			coordsList();
 			}
 		}
@@ -685,9 +700,9 @@ public class MapFileParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(80);
+			setState(79);
 			match(T__10);
-			setState(81);
+			setState(80);
 			match(STRING);
 			}
 		}
@@ -732,9 +747,9 @@ public class MapFileParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(83);
+			setState(82);
 			match(T__11);
-			setState(84);
+			setState(83);
 			stringList();
 			}
 		}
@@ -780,15 +795,15 @@ public class MapFileParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(86);
+			setState(85);
 			match(T__12);
+			setState(86);
+			match(INT);
 			setState(87);
-			match(INT);
-			setState(88);
 			match(T__13);
-			setState(89);
+			setState(88);
 			match(INT);
-			setState(90);
+			setState(89);
 			match(T__14);
 			}
 		}
@@ -837,21 +852,21 @@ public class MapFileParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(92);
+			setState(91);
 			coords();
-			setState(97);
+			setState(96);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__13) {
 				{
 				{
-				setState(93);
+				setState(92);
 				match(T__13);
-				setState(94);
+				setState(93);
 				coords();
 				}
 				}
-				setState(99);
+				setState(98);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -900,21 +915,21 @@ public class MapFileParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(100);
+			setState(99);
 			match(STRING);
-			setState(105);
+			setState(104);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__13) {
 				{
 				{
-				setState(101);
+				setState(100);
 				match(T__13);
-				setState(102);
+				setState(101);
 				match(STRING);
 				}
 				}
-				setState(107);
+				setState(106);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -933,9 +948,9 @@ public class MapFileParser extends Parser {
 
 	@SuppressWarnings("CheckReturnValue")
 	public static class QualifiedNameContext extends ParserRuleContext {
-		public List<TerminalNode> IDENTIFIER() { return getTokens(MapFileParser.IDENTIFIER); }
-		public TerminalNode IDENTIFIER(int i) {
-			return getToken(MapFileParser.IDENTIFIER, i);
+		public List<TerminalNode> ID() { return getTokens(MapFileParser.ID); }
+		public TerminalNode ID(int i) {
+			return getToken(MapFileParser.ID, i);
 		}
 		public QualifiedNameContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -963,21 +978,21 @@ public class MapFileParser extends Parser {
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(108);
-			match(IDENTIFIER);
-			setState(113);
+			setState(107);
+			match(ID);
+			setState(112);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
 			while (_la==T__15) {
 				{
 				{
-				setState(109);
+				setState(108);
 				match(T__15);
-				setState(110);
-				match(IDENTIFIER);
+				setState(109);
+				match(ID);
 				}
 				}
-				setState(115);
+				setState(114);
 				_errHandler.sync(this);
 				_la = _input.LA(1);
 			}
@@ -995,65 +1010,66 @@ public class MapFileParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\u0004\u0001\u0016u\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
+		"\u0004\u0001\u0017t\u0002\u0000\u0007\u0000\u0002\u0001\u0007\u0001\u0002"+
 		"\u0002\u0007\u0002\u0002\u0003\u0007\u0003\u0002\u0004\u0007\u0004\u0002"+
 		"\u0005\u0007\u0005\u0002\u0006\u0007\u0006\u0002\u0007\u0007\u0007\u0002"+
 		"\b\u0007\b\u0002\t\u0007\t\u0002\n\u0007\n\u0002\u000b\u0007\u000b\u0002"+
 		"\f\u0007\f\u0002\r\u0007\r\u0002\u000e\u0007\u000e\u0002\u000f\u0007\u000f"+
-		"\u0001\u0000\u0001\u0000\u0001\u0000\u0001\u0000\u0005\u0000%\b\u0000"+
-		"\n\u0000\f\u0000(\t\u0000\u0001\u0000\u0001\u0000\u0001\u0001\u0001\u0001"+
-		"\u0001\u0001\u0001\u0002\u0001\u0002\u0001\u0002\u0001\u0003\u0001\u0003"+
-		"\u0001\u0003\u0001\u0004\u0001\u0004\u0001\u0004\u0001\u0004\u0003\u0004"+
-		"9\b\u0004\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005"+
-		"\u0001\u0005\u0001\u0005\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006"+
-		"\u0001\u0006\u0001\u0006\u0001\u0007\u0001\u0007\u0001\u0007\u0001\b\u0001"+
-		"\b\u0001\b\u0001\t\u0001\t\u0001\t\u0001\n\u0001\n\u0001\n\u0001\u000b"+
-		"\u0001\u000b\u0001\u000b\u0001\f\u0001\f\u0001\f\u0001\f\u0001\f\u0001"+
-		"\f\u0001\r\u0001\r\u0001\r\u0005\r`\b\r\n\r\f\rc\t\r\u0001\u000e\u0001"+
-		"\u000e\u0001\u000e\u0005\u000eh\b\u000e\n\u000e\f\u000ek\t\u000e\u0001"+
-		"\u000f\u0001\u000f\u0001\u000f\u0005\u000fp\b\u000f\n\u000f\f\u000fs\t"+
-		"\u000f\u0001\u000f\u0000\u0000\u0010\u0000\u0002\u0004\u0006\b\n\f\u000e"+
-		"\u0010\u0012\u0014\u0016\u0018\u001a\u001c\u001e\u0000\u0000k\u0000 \u0001"+
-		"\u0000\u0000\u0000\u0002+\u0001\u0000\u0000\u0000\u0004.\u0001\u0000\u0000"+
-		"\u0000\u00061\u0001\u0000\u0000\u0000\b8\u0001\u0000\u0000\u0000\n:\u0001"+
-		"\u0000\u0000\u0000\fA\u0001\u0000\u0000\u0000\u000eG\u0001\u0000\u0000"+
-		"\u0000\u0010J\u0001\u0000\u0000\u0000\u0012M\u0001\u0000\u0000\u0000\u0014"+
-		"P\u0001\u0000\u0000\u0000\u0016S\u0001\u0000\u0000\u0000\u0018V\u0001"+
-		"\u0000\u0000\u0000\u001a\\\u0001\u0000\u0000\u0000\u001cd\u0001\u0000"+
-		"\u0000\u0000\u001el\u0001\u0000\u0000\u0000 !\u0003\u0002\u0001\u0000"+
-		"!\"\u0003\u0004\u0002\u0000\"&\u0003\u0006\u0003\u0000#%\u0003\b\u0004"+
-		"\u0000$#\u0001\u0000\u0000\u0000%(\u0001\u0000\u0000\u0000&$\u0001\u0000"+
-		"\u0000\u0000&\'\u0001\u0000\u0000\u0000\')\u0001\u0000\u0000\u0000(&\u0001"+
-		"\u0000\u0000\u0000)*\u0005\u0000\u0000\u0001*\u0001\u0001\u0000\u0000"+
-		"\u0000+,\u0005\u0001\u0000\u0000,-\u0003\u0018\f\u0000-\u0003\u0001\u0000"+
-		"\u0000\u0000./\u0005\u0002\u0000\u0000/0\u0003\u0018\f\u00000\u0005\u0001"+
-		"\u0000\u0000\u000012\u0005\u0003\u0000\u000023\u0003\u0018\f\u00003\u0007"+
-		"\u0001\u0000\u0000\u000049\u0003\n\u0005\u000059\u0003\f\u0006\u00006"+
-		"9\u0003\u000e\u0007\u000079\u0003\u0010\b\u000084\u0001\u0000\u0000\u0000"+
-		"85\u0001\u0000\u0000\u000086\u0001\u0000\u0000\u000087\u0001\u0000\u0000"+
-		"\u00009\t\u0001\u0000\u0000\u0000:;\u0005\u0004\u0000\u0000;<\u0005\u0011"+
-		"\u0000\u0000<=\u0005\u0005\u0000\u0000=>\u0003\u0012\t\u0000>?\u0003\u0014"+
-		"\n\u0000?@\u0005\u0006\u0000\u0000@\u000b\u0001\u0000\u0000\u0000AB\u0005"+
-		"\u0007\u0000\u0000BC\u0005\u0005\u0000\u0000CD\u0003\u0012\t\u0000DE\u0003"+
-		"\u0016\u000b\u0000EF\u0005\u0006\u0000\u0000F\r\u0001\u0000\u0000\u0000"+
-		"GH\u0005\b\u0000\u0000HI\u0003\u001e\u000f\u0000I\u000f\u0001\u0000\u0000"+
-		"\u0000JK\u0005\t\u0000\u0000KL\u0005\u0012\u0000\u0000L\u0011\u0001\u0000"+
-		"\u0000\u0000MN\u0005\n\u0000\u0000NO\u0003\u001a\r\u0000O\u0013\u0001"+
-		"\u0000\u0000\u0000PQ\u0005\u000b\u0000\u0000QR\u0005\u0011\u0000\u0000"+
-		"R\u0015\u0001\u0000\u0000\u0000ST\u0005\f\u0000\u0000TU\u0003\u001c\u000e"+
-		"\u0000U\u0017\u0001\u0000\u0000\u0000VW\u0005\r\u0000\u0000WX\u0005\u0013"+
-		"\u0000\u0000XY\u0005\u000e\u0000\u0000YZ\u0005\u0013\u0000\u0000Z[\u0005"+
-		"\u000f\u0000\u0000[\u0019\u0001\u0000\u0000\u0000\\a\u0003\u0018\f\u0000"+
-		"]^\u0005\u000e\u0000\u0000^`\u0003\u0018\f\u0000_]\u0001\u0000\u0000\u0000"+
-		"`c\u0001\u0000\u0000\u0000a_\u0001\u0000\u0000\u0000ab\u0001\u0000\u0000"+
-		"\u0000b\u001b\u0001\u0000\u0000\u0000ca\u0001\u0000\u0000\u0000di\u0005"+
-		"\u0011\u0000\u0000ef\u0005\u000e\u0000\u0000fh\u0005\u0011\u0000\u0000"+
-		"ge\u0001\u0000\u0000\u0000hk\u0001\u0000\u0000\u0000ig\u0001\u0000\u0000"+
-		"\u0000ij\u0001\u0000\u0000\u0000j\u001d\u0001\u0000\u0000\u0000ki\u0001"+
-		"\u0000\u0000\u0000lq\u0005\u0014\u0000\u0000mn\u0005\u0010\u0000\u0000"+
-		"np\u0005\u0014\u0000\u0000om\u0001\u0000\u0000\u0000ps\u0001\u0000\u0000"+
-		"\u0000qo\u0001\u0000\u0000\u0000qr\u0001\u0000\u0000\u0000r\u001f\u0001"+
-		"\u0000\u0000\u0000sq\u0001\u0000\u0000\u0000\u0005&8aiq";
+		"\u0001\u0000\u0004\u0000\"\b\u0000\u000b\u0000\f\u0000#\u0001\u0000\u0001"+
+		"\u0000\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001\u0001"+
+		"\u0001\u0001\u0001\u0003\u0001/\b\u0001\u0001\u0002\u0001\u0002\u0001"+
+		"\u0002\u0001\u0003\u0001\u0003\u0001\u0003\u0001\u0004\u0001\u0004\u0001"+
+		"\u0004\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001\u0005\u0001"+
+		"\u0005\u0001\u0005\u0001\u0006\u0001\u0006\u0001\u0006\u0001\u0006\u0001"+
+		"\u0006\u0001\u0006\u0001\u0007\u0001\u0007\u0001\u0007\u0001\b\u0001\b"+
+		"\u0001\b\u0001\t\u0001\t\u0001\t\u0001\n\u0001\n\u0001\n\u0001\u000b\u0001"+
+		"\u000b\u0001\u000b\u0001\f\u0001\f\u0001\f\u0001\f\u0001\f\u0001\f\u0001"+
+		"\r\u0001\r\u0001\r\u0005\r_\b\r\n\r\f\rb\t\r\u0001\u000e\u0001\u000e\u0001"+
+		"\u000e\u0005\u000eg\b\u000e\n\u000e\f\u000ej\t\u000e\u0001\u000f\u0001"+
+		"\u000f\u0001\u000f\u0005\u000fo\b\u000f\n\u000f\f\u000fr\t\u000f\u0001"+
+		"\u000f\u0000\u0000\u0010\u0000\u0002\u0004\u0006\b\n\f\u000e\u0010\u0012"+
+		"\u0014\u0016\u0018\u001a\u001c\u001e\u0000\u0000m\u0000!\u0001\u0000\u0000"+
+		"\u0000\u0002.\u0001\u0000\u0000\u0000\u00040\u0001\u0000\u0000\u0000\u0006"+
+		"3\u0001\u0000\u0000\u0000\b6\u0001\u0000\u0000\u0000\n9\u0001\u0000\u0000"+
+		"\u0000\f@\u0001\u0000\u0000\u0000\u000eF\u0001\u0000\u0000\u0000\u0010"+
+		"I\u0001\u0000\u0000\u0000\u0012L\u0001\u0000\u0000\u0000\u0014O\u0001"+
+		"\u0000\u0000\u0000\u0016R\u0001\u0000\u0000\u0000\u0018U\u0001\u0000\u0000"+
+		"\u0000\u001a[\u0001\u0000\u0000\u0000\u001cc\u0001\u0000\u0000\u0000\u001e"+
+		"k\u0001\u0000\u0000\u0000 \"\u0003\u0002\u0001\u0000! \u0001\u0000\u0000"+
+		"\u0000\"#\u0001\u0000\u0000\u0000#!\u0001\u0000\u0000\u0000#$\u0001\u0000"+
+		"\u0000\u0000$%\u0001\u0000\u0000\u0000%&\u0005\u0000\u0000\u0001&\u0001"+
+		"\u0001\u0000\u0000\u0000\'/\u0003\u0004\u0002\u0000(/\u0003\u0006\u0003"+
+		"\u0000)/\u0003\b\u0004\u0000*/\u0003\n\u0005\u0000+/\u0003\f\u0006\u0000"+
+		",/\u0003\u000e\u0007\u0000-/\u0003\u0010\b\u0000.\'\u0001\u0000\u0000"+
+		"\u0000.(\u0001\u0000\u0000\u0000.)\u0001\u0000\u0000\u0000.*\u0001\u0000"+
+		"\u0000\u0000.+\u0001\u0000\u0000\u0000.,\u0001\u0000\u0000\u0000.-\u0001"+
+		"\u0000\u0000\u0000/\u0003\u0001\u0000\u0000\u000001\u0005\u0001\u0000"+
+		"\u000012\u0003\u0018\f\u00002\u0005\u0001\u0000\u0000\u000034\u0005\u0002"+
+		"\u0000\u000045\u0003\u0018\f\u00005\u0007\u0001\u0000\u0000\u000067\u0005"+
+		"\u0003\u0000\u000078\u0003\u0018\f\u00008\t\u0001\u0000\u0000\u00009:"+
+		"\u0005\u0004\u0000\u0000:;\u0005\u0012\u0000\u0000;<\u0005\u0005\u0000"+
+		"\u0000<=\u0003\u0012\t\u0000=>\u0003\u0014\n\u0000>?\u0005\u0006\u0000"+
+		"\u0000?\u000b\u0001\u0000\u0000\u0000@A\u0005\u0007\u0000\u0000AB\u0005"+
+		"\u0005\u0000\u0000BC\u0003\u0012\t\u0000CD\u0003\u0016\u000b\u0000DE\u0005"+
+		"\u0006\u0000\u0000E\r\u0001\u0000\u0000\u0000FG\u0005\b\u0000\u0000GH"+
+		"\u0003\u001e\u000f\u0000H\u000f\u0001\u0000\u0000\u0000IJ\u0005\t\u0000"+
+		"\u0000JK\u0005\u0011\u0000\u0000K\u0011\u0001\u0000\u0000\u0000LM\u0005"+
+		"\n\u0000\u0000MN\u0003\u001a\r\u0000N\u0013\u0001\u0000\u0000\u0000OP"+
+		"\u0005\u000b\u0000\u0000PQ\u0005\u0012\u0000\u0000Q\u0015\u0001\u0000"+
+		"\u0000\u0000RS\u0005\f\u0000\u0000ST\u0003\u001c\u000e\u0000T\u0017\u0001"+
+		"\u0000\u0000\u0000UV\u0005\r\u0000\u0000VW\u0005\u0013\u0000\u0000WX\u0005"+
+		"\u000e\u0000\u0000XY\u0005\u0013\u0000\u0000YZ\u0005\u000f\u0000\u0000"+
+		"Z\u0019\u0001\u0000\u0000\u0000[`\u0003\u0018\f\u0000\\]\u0005\u000e\u0000"+
+		"\u0000]_\u0003\u0018\f\u0000^\\\u0001\u0000\u0000\u0000_b\u0001\u0000"+
+		"\u0000\u0000`^\u0001\u0000\u0000\u0000`a\u0001\u0000\u0000\u0000a\u001b"+
+		"\u0001\u0000\u0000\u0000b`\u0001\u0000\u0000\u0000ch\u0005\u0012\u0000"+
+		"\u0000de\u0005\u000e\u0000\u0000eg\u0005\u0012\u0000\u0000fd\u0001\u0000"+
+		"\u0000\u0000gj\u0001\u0000\u0000\u0000hf\u0001\u0000\u0000\u0000hi\u0001"+
+		"\u0000\u0000\u0000i\u001d\u0001\u0000\u0000\u0000jh\u0001\u0000\u0000"+
+		"\u0000kp\u0005\u0014\u0000\u0000lm\u0005\u0010\u0000\u0000mo\u0005\u0014"+
+		"\u0000\u0000nl\u0001\u0000\u0000\u0000or\u0001\u0000\u0000\u0000pn\u0001"+
+		"\u0000\u0000\u0000pq\u0001\u0000\u0000\u0000q\u001f\u0001\u0000\u0000"+
+		"\u0000rp\u0001\u0000\u0000\u0000\u0005#.`hp";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {

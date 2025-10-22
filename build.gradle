@@ -16,12 +16,14 @@ subprojects {
         mavenCentral()
     }
 
-    sourceCompatibility = 17
-    targetCompatibility = 17
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 
     pmd {
         consoleOutput = true
-        toolVersion = '6.55.0'
+        toolVersion = '7.0.0'  // Updated from 6.55.0
         ruleSetFiles = files("${rootProject.projectDir}/saed-pmd-rules.xml")
         ruleSets = []
         ignoreFailures = true

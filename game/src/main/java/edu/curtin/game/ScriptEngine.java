@@ -32,12 +32,14 @@ public class ScriptEngine {
             interpreter.exec(script);
         } catch (PyException e) {
             // Handle Python-specific exceptions
-            System.err.println("Python script error: " + e.getMessage());
-            e.printStackTrace();
+            System.err.println("Warning: Python script error - " + e.getMessage());
+            // Only print full trace in debug mode
+            // e.printStackTrace();
         } catch (Exception e) {
             // Handle general exceptions
-            System.err.println("Script execution error: " + e.getMessage());
-            e.printStackTrace();
+            System.err.println("Warning: Script execution error - " + e.getMessage());
+            // Only print full trace in debug mode
+            // e.printStackTrace();
         }
     }
 }

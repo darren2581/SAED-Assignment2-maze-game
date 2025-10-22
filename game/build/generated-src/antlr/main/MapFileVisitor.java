@@ -17,6 +17,12 @@ public interface MapFileVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitMapFile(MapFileParser.MapFileContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link MapFileParser#declaration}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitDeclaration(MapFileParser.DeclarationContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link MapFileParser#sizeDecl}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -34,12 +40,6 @@ public interface MapFileVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitGoalDecl(MapFileParser.GoalDeclContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link MapFileParser#declaration}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitDeclaration(MapFileParser.DeclarationContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link MapFileParser#itemDecl}.
 	 * @param ctx the parse tree

@@ -18,6 +18,16 @@ public interface MapFileListener extends ParseTreeListener {
 	 */
 	void exitMapFile(MapFileParser.MapFileContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link MapFileParser#declaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterDeclaration(MapFileParser.DeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link MapFileParser#declaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitDeclaration(MapFileParser.DeclarationContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link MapFileParser#sizeDecl}.
 	 * @param ctx the parse tree
 	 */
@@ -47,16 +57,6 @@ public interface MapFileListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitGoalDecl(MapFileParser.GoalDeclContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link MapFileParser#declaration}.
-	 * @param ctx the parse tree
-	 */
-	void enterDeclaration(MapFileParser.DeclarationContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link MapFileParser#declaration}.
-	 * @param ctx the parse tree
-	 */
-	void exitDeclaration(MapFileParser.DeclarationContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link MapFileParser#itemDecl}.
 	 * @param ctx the parse tree
