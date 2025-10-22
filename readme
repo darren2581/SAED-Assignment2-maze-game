@@ -1,1 +1,1 @@
-./gradlew run --args="../input.utf8.map"
+./gradlew run --args="../demoinput.utf8.map"

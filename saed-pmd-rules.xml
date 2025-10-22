@@ -74,14 +74,14 @@ Ensure there's a copy of this file in the same directory(ies) as build.gradle.
     <rule ref="category/java/design.xml/AvoidThrowingRawExceptionTypes" />
     <rule ref="category/java/design.xml/AvoidThrowingNullPointerException" />
     <rule ref="category/java/errorprone.xml/DoNotThrowExceptionInFinally" />
-    
+
     <!-- Catching exception types -->
     <rule ref="category/java/errorprone.xml/AvoidCatchingThrowable" />
     <rule ref="category/java/design.xml/AvoidCatchingGenericException" />
     <rule ref="category/java/errorprone.xml/AvoidCatchingNPE" />
-    
+
     <!-- Catch blocks -->
-    <rule ref="category/java/errorprone.xml/EmptyCatchBlock" /> 
+    <rule ref="category/java/errorprone.xml/EmptyCatchBlock" />
     <rule ref="category/java/errorprone.xml/AvoidInstanceofChecksInCatchClause" />
     <rule ref="category/java/errorprone.xml/AvoidLosingExceptionInformation" />
     <rule ref="category/java/bestpractices.xml/AvoidPrintStackTrace" />
@@ -90,26 +90,26 @@ Ensure there's a copy of this file in the same directory(ies) as build.gradle.
           message="When throwing an exception from inside a catch block, pass the original exception object as a ''cause'' argument to the new exception constructor. This lets the new exception remember the entire stack trace." />
     <rule ref="category/java/codestyle.xml/IdenticalCatchBranches" />
     <rule ref="category/java/design.xml/AvoidThrowingNewInstanceOfSameException" />
-    
+
     <!-- Throw declarations -->
     <rule ref="category/java/design.xml/SignatureDeclareThrowsException">
         <properties>
             <property name="IgnoreJUnitCompletely" value="false" />
         </properties>
     </rule>
-    
+
     <!-- New exception types -->
     <rule ref="category/java/errorprone.xml/DoNotExtendJavaLangThrowable" />
     <rule ref="category/java/design.xml/DoNotExtendJavaLangError" />
-        
+
     <!-- VM -->
     <rule ref="category/java/errorprone.xml/DoNotTerminateVM" />
-    
+
     <!-- Almost certainly erroneous -->
     <rule ref="category/java/errorprone.xml/BrokenNullCheck" />
     <rule ref="category/java/errorprone.xml/ComparisonWithNaN" />
     <rule ref="category/java/errorprone.xml/ClassCastExceptionWithToArray" />
-    
+
     <!-- Cloning -->
     <rule ref="category/java/errorprone.xml/CloneMethodMustBePublic" />
     <rule ref="category/java/errorprone.xml/CloneMethodReturnTypeMustMatchClassName" />
@@ -127,7 +127,7 @@ Ensure there's a copy of this file in the same directory(ies) as build.gradle.
     <!-- <rule ref="category/java/codestyle.xml/PrematureDeclaration" /> -->
     <rule ref="category/java/codestyle.xml/TooManyStaticImports" />
     <rule ref="category/java/design.xml/FinalFieldCouldBeStatic" />
-    
+
     <!--
     Disabling UnnecessaryImport, since it can give spurious results when PMD is run in standalone 
     form. (If the code includes 'external.package.*', PMD won't know what classes are actually
@@ -135,7 +135,7 @@ Ensure there's a copy of this file in the same directory(ies) as build.gradle.
     <rule ref="category/java/codestyle.xml/UnnecessaryImport" />    
     -->
 
-    
+
     <!-- Resources -->
     <rule ref="category/java/errorprone.xml/CloseResource">
         <properties>
@@ -145,12 +145,12 @@ Ensure there's a copy of this file in the same directory(ies) as build.gradle.
         </properties>
     </rule>
     <rule ref="category/java/bestpractices.xml/UseTryWithResources" />
-    
+
     <!-- Objects -->
     <rule ref="category/java/errorprone.xml/CompareObjectsWithEquals" />
     <!-- <rule ref="category/java/codestyle.xml/UnnecessaryBoxing" /> -->
     <rule ref="category/java/errorprone.xml/EqualsNull" />
-    
+
     <!-- Inheritance -->
     <rule ref="category/java/errorprone.xml/ConstructorCallsOverridableMethod" />
     <rule ref="category/java/bestpractices.xml/AbstractClassWithoutAbstractMethod" />
@@ -160,13 +160,13 @@ Ensure there's a copy of this file in the same directory(ies) as build.gradle.
     <rule ref="category/java/codestyle.xml/EmptyMethodInAbstractClassShouldBeAbstract" />
     <rule ref="category/java/codestyle.xml/ExtendsObject" />
     <rule ref="category/java/design.xml/AbstractClassWithoutAnyMethod" />
-    
+
     <!-- Typing -->
     <rule ref="category/java/bestpractices.xml/LooseCoupling" />
     <rule ref="category/java/codestyle.xml/UnnecessaryCast" />
     <!-- <rule ref="category/java/codestyle.xml/UnnecessaryModifier" /> -->
     <rule ref="category/java/codestyle.xml/UseDiamondOperator" />
-    
+
     <!-- Naming Conventions -->
     <rule ref="category/java/codestyle.xml/ClassNamingConventions" />
     <rule ref="category/java/codestyle.xml/FieldNamingConventions" >
@@ -184,7 +184,7 @@ Ensure there's a copy of this file in the same directory(ies) as build.gradle.
     <rule ref="category/java/codestyle.xml/MethodNamingConventions" />
     <rule ref="category/java/codestyle.xml/PackageCase" />
     <rule ref="category/java/codestyle.xml/UnnecessaryFullyQualifiedName" />
-    
+
     <!-- Suspicious control constructs -->
     <rule ref="category/java/errorprone.xml/AvoidBranchingStatementAsLastInLoop" />
     <rule ref="category/java/codestyle.xml/EmptyControlStatement" />
@@ -197,25 +197,25 @@ Ensure there's a copy of this file in the same directory(ies) as build.gradle.
     <rule ref="category/java/codestyle.xml/ControlStatementBraces" />
     <rule ref="category/java/codestyle.xml/ForLoopShouldBeWhileLoop" />
     <rule ref="category/java/codestyle.xml/UnnecessaryReturn" />
-    
+
     <!-- Inefficient control constructs -->
     <rule ref="category/java/bestpractices.xml/ForLoopCanBeForeach" />
-    
+
     <!-- Statistical -->
     <rule ref="category/java/design.xml/ExcessiveParameterList" />
     <rule ref="category/java/design.xml/ExcessivePublicCount" />
-    
+
     <!-- Unusual extra -->
     <rule ref="category/java/errorprone.xml/AvoidCallingFinalize" />
     <rule ref="category/java/errorprone.xml/DontImportSun" />
     <rule ref="category/java/errorprone.xml/IdempotentOperations" />
     <rule ref="category/java/codestyle.xml/AvoidDollarSigns" />
     <rule ref="category/java/codestyle.xml/UnnecessaryAnnotationValueElement" />
-    
+
     <!-- Logging -->
     <rule ref="category/java/bestpractices.xml/GuardLogStatement"
           message="Use lambda expressions ('() -> ...') when building a log message from variable values." />
-        
+
     <!-- Multithreading -->
     <rule ref="category/java/multithreading.xml/AvoidSynchronizedAtMethodLevel" />
     <rule ref="category/java/multithreading.xml/AvoidThreadGroup" />

@@ -17,11 +17,11 @@ public class InputFileParser {
         CharStream input = CharStreams.fromFileName(filename, encoding);
 
         // Create lexer to tokenize the input
-        MapFileLexer lexer = new MapFileLexer(input);
+        MapFileLexer lexer = new MapFileLexer(input); // Fixed: removed unnecessary FQN
         // Create token stream from lexer
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         // Create parser with token stream
-        edu.curtin.game.parser.MapFileParser parser = new edu.curtin.game.parser.MapFileParser(tokens);
+        MapFileParser parser = new MapFileParser(tokens);
 
         // Parse the entire file into a parse tree
         ParseTree tree = parser.mapFile();
@@ -39,7 +39,7 @@ public class InputFileParser {
 
         // Visit the root mapFile rule and return the config
         @Override
-        public GameConfig visitMapFile(edu.curtin.game.parser.MapFileParser.MapFileContext ctx) {
+        public GameConfig visitMapFile(MapFileParser.MapFileContext ctx) {
             // Visit all child nodes to populate config
             visitChildren(ctx);
             return config;
@@ -47,7 +47,7 @@ public class InputFileParser {
 
         // Handle size declaration
         @Override
-        public Object visitSizeDecl(edu.curtin.game.parser.MapFileParser.SizeDeclContext ctx) {
+        public Object visitSizeDecl(MapFileParser.SizeDeclContext ctx) {
             // Extract row and col from coords
             int[] coords = (int[]) visit(ctx.coords());
             // Set grid dimensions in config
@@ -57,7 +57,7 @@ public class InputFileParser {
 
         // Handle start position declaration
         @Override
-        public Object visitStartDecl(edu.curtin.game.parser.MapFileParser.StartDeclContext ctx) {
+        public Object visitStartDecl(MapFileParser.StartDeclContext ctx) {
             // Extract row and col from coords
             int[] coords = (int[]) visit(ctx.coords());
             // Set player start position in config
@@ -67,7 +67,7 @@ public class InputFileParser {
 
         // Handle goal position declaration
         @Override
-        public Object visitGoalDecl(edu.curtin.game.parser.MapFileParser.GoalDeclContext ctx) {
+        public Object visitGoalDecl(MapFileParser.GoalDeclContext ctx) {
             // Extract row and col from coords
             int[] coords = (int[]) visit(ctx.coords());
             // Set goal position in config
@@ -77,7 +77,7 @@ public class InputFileParser {
 
         // Handle item declaration
         @Override
-        public Object visitItemDecl(edu.curtin.game.parser.MapFileParser.ItemDeclContext ctx) {
+        public Object visitItemDecl(MapFileParser.ItemDeclContext ctx) {
             // Extract item name from quoted string
             String itemName = stripQuotes(ctx.STRING().getText());
             // Get list of locations for this item
@@ -89,7 +89,7 @@ public class InputFileParser {
 
         // Handle obstacle declaration
         @Override
-        public Object visitObstacleDecl(edu.curtin.game.parser.MapFileParser.ObstacleDeclContext ctx) {
+        public Object visitObstacleDecl(MapFileParser.ObstacleDeclContext ctx) {
             // Get list of locations for this obstacle
             List<Location> locations = (List<Location>) visit(ctx.atDecl());
             // Get list of required items for this obstacle
@@ -103,7 +103,7 @@ public class InputFileParser {
 
         // Handle plugin declaration
         @Override
-        public Object visitPluginDecl(edu.curtin.game.parser.MapFileParser.PluginDeclContext ctx) {
+        public Object visitPluginDecl(MapFileParser.PluginDeclContext ctx) {
             // Extract fully qualified class name
             String className = ctx.qualifiedName().getText();
             // Add plugin class to config
@@ -113,7 +113,7 @@ public class InputFileParser {
 
         // Handle script declaration
         @Override
-        public Object visitScriptDecl(edu.curtin.game.parser.MapFileParser.ScriptDeclContext ctx) {
+        public Object visitScriptDecl(MapFileParser.ScriptDeclContext ctx) {
             // Extract script block text
             String scriptBlock = ctx.SCRIPT_BLOCK().getText();
             // Remove delimiters (e.g., <<< >>>) to get raw script
@@ -125,19 +125,19 @@ public class InputFileParser {
 
         // Handle 'at' declaration (redirects to coords list)
         @Override
-        public Object visitAtDecl(edu.curtin.game.parser.MapFileParser.AtDeclContext ctx) {
+        public Object visitAtDecl(MapFileParser.AtDeclContext ctx) {
             return visit(ctx.coordsList());
         }
 
         // Handle 'requires' declaration (redirects to string list)
         @Override
-        public Object visitRequiresDecl(edu.curtin.game.parser.MapFileParser.RequiresDeclContext ctx) {
+        public Object visitRequiresDecl(MapFileParser.RequiresDeclContext ctx) {
             return visit(ctx.stringList());
         }
 
         // Parse coordinates (row, col)
         @Override
-        public Object visitCoords(edu.curtin.game.parser.MapFileParser.CoordsContext ctx) {
+        public Object visitCoords(MapFileParser.CoordsContext ctx) {
             // Parse first INT as row
             int row = Integer.parseInt(ctx.INT(0).getText());
             // Parse second INT as col
@@ -148,7 +148,7 @@ public class InputFileParser {
 
         // Parse list of coordinates into Location objects
         @Override
-        public Object visitCoordsList(edu.curtin.game.parser.MapFileParser.CoordsListContext ctx) {
+        public Object visitCoordsList(MapFileParser.CoordsListContext ctx) {
             // Create list to hold locations
             List<Location> locations = new ArrayList<>();
             // For each coords child
@@ -163,7 +163,7 @@ public class InputFileParser {
 
         // Parse list of quoted strings
         @Override
-        public Object visitStringList(edu.curtin.game.parser.MapFileParser.StringListContext ctx) {
+        public Object visitStringList(MapFileParser.StringListContext ctx) {
             // Create list to hold strings
             List<String> strings = new ArrayList<>();
             // For each STRING token

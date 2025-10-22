@@ -70,7 +70,7 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\game-1.0.0.jar;%APP_HOME%\lib\antlr4-4.13.1.jar;%APP_HOME%\lib\teleport-1.0.0.jar;%APP_HOME%\lib\reveal-1.0.0.jar;%APP_HOME%\lib\penalty-1.0.0.jar;%APP_HOME%\lib\prize-1.0.0.jar;%APP_HOME%\lib\api-1.0.0.jar;%APP_HOME%\lib\antlr4-runtime-4.13.1.jar;%APP_HOME%\lib\jython-standalone-2.7.3.jar;%APP_HOME%\lib\ST4-4.3.4.jar;%APP_HOME%\lib\antlr-runtime-3.5.3.jar;%APP_HOME%\lib\org.abego.treelayout.core-1.0.3.jar;%APP_HOME%\lib\icu4j-72.1.jar
+set CLASSPATH=%APP_HOME%\lib\game.jar;%APP_HOME%\lib\antlr4-4.13.1.jar;%APP_HOME%\lib\teleport.jar;%APP_HOME%\lib\reveal.jar;%APP_HOME%\lib\penalty.jar;%APP_HOME%\lib\prize.jar;%APP_HOME%\lib\api.jar;%APP_HOME%\lib\antlr4-runtime-4.13.1.jar;%APP_HOME%\lib\jython-standalone-2.7.3.jar;%APP_HOME%\lib\ST4-4.3.4.jar;%APP_HOME%\lib\antlr-runtime-3.5.3.jar;%APP_HOME%\lib\org.abego.treelayout.core-1.0.3.jar;%APP_HOME%\lib\icu4j-72.1.jar
 
 
 @rem Execute game

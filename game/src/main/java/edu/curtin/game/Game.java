@@ -14,7 +14,7 @@ public class Game implements GameAPI {
     // List of callback objects from loaded plugins
     private final List<Callback> callbacks;
     // Resource bundle for localized messages
-    private final ResourceBundle messages;
+    private ResourceBundle messages; // Changed from final to allow reassignment
     // Current locale for internationalization
     private Locale currentLocale;
     // Current date in the game (advances with moves)
@@ -96,21 +96,17 @@ public class Game implements GameAPI {
                     // Invoke the init method, passing this game instance
                     initMethod.invoke(plugin, this);
                 } catch (NoSuchMethodException e) {
-                    // Init method is optional, so ignore if not found
+                    // Expected if plugin has no init method; safe to ignore
+                    System.out.println("Plugin " + className + " has no init() method.");
                 }
 
                 // If the plugin implements Callback, add it to the list
                 if (plugin instanceof Callback) {
                     callbacks.add((Callback) plugin);
                 }
-            } catch (ClassNotFoundException e) {
-                // Plugin class not found - log but continue
-                System.err.println("Warning: Plugin class not found: " + className);
-            } catch (Exception e) {
-                // Handle any other errors during plugin loading
+            } catch (ReflectiveOperationException e) {
+                // Plugin class not found or failed to load
                 System.err.println("Warning: Failed to load plugin: " + className);
-                // Only print stack trace in debug mode
-                // e.printStackTrace();
             }
         }
 
@@ -121,11 +117,8 @@ public class Game implements GameAPI {
             try {
                 // Run the script in the engine
                 scriptEngine.executeScript(script);
-            } catch (Exception e) {
-                // Handle any errors during script execution
+            } catch (RuntimeException e) { // NOPMD AvoidCatchingGenericException
                 System.err.println("Warning: Failed to execute script (invalid Python syntax)");
-                // Only print stack trace in debug mode
-                // e.printStackTrace();
             }
         }
     }
@@ -133,74 +126,73 @@ public class Game implements GameAPI {
     // Main game loop: Handle user input and update game state
     public void run() {
         // Create scanner for reading user input
-        Scanner scanner = new Scanner(System.in);
-        // Flag to control the game loop
-        boolean running = true;
+        try (Scanner scanner = new Scanner(System.in)) {
+            // Flag to control the game loop
+            boolean running = true;
 
-        // Continue looping until quit or victory
-        while (running) {
-            // Render the current game state
-            display();
-            // Print prompt for user input
-            System.out.println(messages.getString("prompt"));
-            // Read and normalize user input (trim whitespace, lowercase)
-            String input = scanner.nextLine().trim().toLowerCase();
+            // Continue looping until quit or victory
+            while (running) {
+                // Render the current game state
+                display();
+                // Print prompt for user input
+                System.out.println(messages.getString("prompt"));
+                // Read and normalize user input (trim whitespace, lowercase)
+                String input = scanner.nextLine().trim().toLowerCase();
 
-            // Handle movement commands
-            switch (input) {
-                case "w", "up" -> move(0, -1, "up");  // Move up (decrease row)
-                case "s", "down" -> move(0, 1, "down");  // Move down (increase row)
-                case "a", "left" -> move(-1, 0, "left");  // Move left (decrease col)
-                case "d", "right" -> move(1, 0, "right");  // Move right (increase col)
-                case "locale" -> changeLocale(scanner);  // Change the current locale
-                case "quit" -> running = false;  // Exit the game
-                default -> {
-                    // Check if input matches a plugin menu action
-                    handleMenuAction(input);
+                // Handle movement commands
+                switch (input) {
+                    case "w", "up" -> move(0, -1, "up");  // Move up (decrease row)
+                    case "s", "down" -> move(0, 1, "down");  // Move down (increase row)
+                    case "a", "left" -> move(-1, 0, "left");  // Move left (decrease col)
+                    case "d", "right" -> move(1, 0, "right");  // Move right (increase col)
+                    case "locale" -> changeLocale(scanner);  // Change the current locale
+                    case "quit" -> running = false;  // Exit the game
+                    default -> {
+                        // Check if input is a numeric menu action
+                        if (input.matches("\\d+")) {
+                            handleMenuAction(input);
+                        } else {
+                            System.out.println("Invalid command!");
+                        }
+                    }
+                }
+
+                // Check for victory condition (player reached goal)
+                if (grid.getSquare(player.getRow(), player.getCol()).isGoal()) {
+                    System.out.println(messages.getString("victory"));
+                    System.out.println(messages.getString("days") + ": " + moveCount);
+                    running = false;
                 }
             }
-
-            // Check if player is on the goal square after move
-            if (grid.getSquare(player.getRow(), player.getCol()).isGoal()) {
-                // Print victory message
-                System.out.println(messages.getString("victory"));
-                // Print total days (moves) taken
-                System.out.println(messages.getString("days") + ": " + moveCount);
-                // End the game
-                running = false;
-            }
         }
-        // Close the input scanner
-        scanner.close();
     }
 
-    // Attempt to move the player in the specified direction
-    private void move(int dx, int dy, String direction) {
-        // Calculate new position based on delta row (dy) and delta col (dx)
-        int newRow = player.getRow() + dy;
-        int newCol = player.getCol() + dx;
+    // Handle player movement
+    private void move(int colDelta, int rowDelta, String direction) {
+        // Calculate new position
+        int newRow = player.getRow() + rowDelta;
+        int newCol = player.getCol() + colDelta;
 
-        // Check if new position is out of grid bounds
-        if (newRow < 0 || newRow >= grid.getRows() ||
-                newCol < 0 || newCol >= grid.getCols()) {
-            // Print invalid move message
+        // Check if new position is within grid bounds
+        if (newRow < 0 || newRow >= grid.getRows() || newCol < 0 || newCol >= grid.getCols()) {
             System.out.println(messages.getString("invalid_move"));
-            return;  // Abort move
+            return;
         }
 
-        // Get the target square at new position
+        // Get the target square
         GridSquare targetSquare = grid.getSquare(newRow, newCol);
 
-        // Check if target has an obstacle
-        if (targetSquare.getObstacle() != null) {
-            // Verify if player can pass the obstacle with current inventory
-            if (!canPassObstacle(targetSquare.getObstacle())) {
-                // Print blocked message
+        // Check if there's an obstacle
+        Obstacle obstacle = targetSquare.getObstacle();
+        if (obstacle != null) {
+            // Check if player can pass the obstacle
+            if (!canPassObstacle(obstacle)) {
                 System.out.println(messages.getString("blocked"));
-                // List required items for this obstacle
-                System.out.println(messages.getString("required") + ": " +
-                        String.join(", ", targetSquare.getObstacle().getRequiredItems()));
-                return;  // Abort move
+                System.out.println(messages.getString("required") + ":");
+                for (String item : obstacle.getRequiredItems()) {
+                    System.out.println("  - " + item);
+                }
+                return; // Abort move
             }
         }
 
@@ -284,6 +276,26 @@ public class Game implements GameAPI {
         revealSquare(row, col + 1);
     }
 
+    // Determine the display symbol for a given square
+    private String getSymbolForSquare(int row, int col, GridSquare square) {
+        if (row == player.getRow() && col == player.getCol()) {
+            return " P ";
+        }
+        if (!square.isVisible()) {
+            return "###";
+        }
+        if (square.isGoal()) {
+            return " G ";
+        }
+        if (square.getItem() != null) {
+            return " I ";
+        }
+        if (square.getObstacle() != null) {
+            return " X ";
+        }
+        return " . ";
+    }
+
     // Display the current game state to the console
     private void display() {
         // Print header line
@@ -299,30 +311,9 @@ public class Game implements GameAPI {
         // Render the grid row by row
         for (int row = 0; row < grid.getRows(); row++) {
             for (int col = 0; col < grid.getCols(); col++) {
-                // Get the square at current position
                 GridSquare square = grid.getSquare(row, col);
-
-                // If this is the player's position
-                if (row == player.getRow() && col == player.getCol()) {
-                    System.out.print(" P ");
-                    // If square is not visible (fog of war)
-                } else if (!square.isVisible()) {
-                    System.out.print("###");
-                    // If square is the goal
-                } else if (square.isGoal()) {
-                    System.out.print(" G ");
-                    // If square has an item
-                } else if (square.getItem() != null) {
-                    System.out.print(" I ");
-                    // If square has an obstacle
-                } else if (square.getObstacle() != null) {
-                    System.out.print(" X ");
-                    // Empty visible square
-                } else {
-                    System.out.print(" . ");
-                }
+                System.out.print(getSymbolForSquare(row, col, square));
             }
-            // End of row
             System.out.println();
         }
 
@@ -357,28 +348,31 @@ public class Game implements GameAPI {
 
     // Prompt user to change the locale
     private void changeLocale(Scanner scanner) {
-        // Print prompt for locale tag
         System.out.print(messages.getString("enter_locale") + ": ");
-        // Read new locale tag
         String tag = scanner.nextLine().trim();
-        // Set new locale
-        currentLocale = Locale.forLanguageTag(tag);
-        // Confirm change
-        System.out.println("Locale changed to: " + currentLocale.toLanguageTag());
+        try {
+            currentLocale = Locale.forLanguageTag(tag);
+            // Clear ResourceBundle cache to ensure new locale is loaded
+            ResourceBundle.clearCache();
+            // Reload the ResourceBundle with the new locale
+            messages = ResourceBundle.getBundle("GameMessages", currentLocale);
+            System.out.println("Locale changed to: " + currentLocale.toLanguageTag());
+        } catch (MissingResourceException e) {
+            System.out.println("Error: No resources found for locale '" + tag + "'. Reverting to default locale.");
+            currentLocale = Locale.getDefault();
+            messages = ResourceBundle.getBundle("GameMessages", currentLocale);
+        }
     }
 
     // Handle selection of a special menu action
     private void handleMenuAction(String input) {
-        // Try each callback to see if it matches the input number
         for (int i = 0; i < callbacks.size(); i++) {
-            // Get the callback
             Callback cb = callbacks.get(i);
-            // Check if input matches this menu index and label exists
-            if (cb.getMenuLabel() != null &&
-                    input.equals(String.valueOf(i + 1))) {
-                // Trigger the callback's menu action
+            String label = cb.getMenuLabel();
+            String menuOption = String.valueOf(i + 1);
+            if (label != null && input.equals(menuOption)) {
                 cb.onMenuAction();
-                return;  // Exit after handling
+                return;
             }
         }
     }
