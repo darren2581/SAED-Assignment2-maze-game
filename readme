@@ -1,1 +1,6 @@
 ./gradlew run --args="../demoinput.utf8.map"
+./gradlew run --args="../testinput-0.utf8.map"
+
+./gradlew :game:install
+game/build/install/game/bin/game demoinput.utf8.map
+game/build/install/game/bin/game testinput-0.utf8.map
