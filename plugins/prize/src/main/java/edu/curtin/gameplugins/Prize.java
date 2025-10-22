@@ -98,16 +98,14 @@ public class Prize implements Callback {
     // Menu action: Displays current progress towards prize
     @Override
     public void onMenuAction() {
-        // Print progress summary
         System.out.println("Progress towards prize:");
         System.out.println("  Items collected: " + itemCount);
         System.out.println("  Obstacles traversed: " + obstacleCount);
         System.out.println("  Total: " + (itemCount + obstacleCount) + "/5");
-
-        // If prize awarded, note that
         if (prizeAwarded) {
             System.out.println("  Prize already awarded!");
         }
+        System.out.flush(); // Ensure output is displayed immediately
     }
 
     // Returns the menu label for this plugin
