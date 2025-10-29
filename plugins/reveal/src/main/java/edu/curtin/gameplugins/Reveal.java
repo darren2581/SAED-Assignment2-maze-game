@@ -12,11 +12,6 @@ public class Reveal implements Callback {
     // Flag to ensure reveal happens only once
     private boolean hasRevealed = false;
 
-    // Default constructor: No initialization needed
-    public Reveal() {
-        // Default constructor
-    }
-
     // Initialization method: Set the game API reference
     public void init(GameAPI api) {
         this.gameAPI = api;

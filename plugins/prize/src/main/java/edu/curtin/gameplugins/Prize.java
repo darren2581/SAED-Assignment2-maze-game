@@ -16,11 +16,6 @@ public class Prize implements Callback {
     // Flag to indicate if prize has been awarded
     private boolean prizeAwarded = false;
 
-    // Default constructor: No initialization needed
-    public Prize() {
-        // Default constructor
-    }
-
     // Initialization method: Set the game API reference
     public void init(GameAPI api) {
         this.gameAPI = api;

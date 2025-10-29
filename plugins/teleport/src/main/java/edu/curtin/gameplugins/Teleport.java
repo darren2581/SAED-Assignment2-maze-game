@@ -16,11 +16,6 @@ public class Teleport implements Callback {
     // Random number generator for selecting location
     private final Random random = new Random();
 
-    // Default constructor required for dynamic loading
-    public Teleport() {
-        // Default constructor required for dynamic loading
-    }
-
     // Initialization method: Set the game API reference
     public void init(GameAPI api) {
         this.gameAPI = api;
