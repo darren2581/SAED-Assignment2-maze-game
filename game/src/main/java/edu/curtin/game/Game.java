@@ -117,7 +117,7 @@ public class Game implements GameAPI {
             try {
                 // Run the script in the engine
                 scriptEngine.executeScript(script);
-            } catch (RuntimeException e) { // NOPMD AvoidCatchingGenericException
+            } catch (org.python.core.PyException | IllegalArgumentException e) {
                 System.err.println("Warning: Failed to execute script (invalid Python syntax)");
             }
         }
@@ -379,11 +379,15 @@ public class Game implements GameAPI {
 
     // API method: Return player reference
     @Override
-    public PlayerAPI getPlayer() { return player; }
+    public PlayerAPI getPlayer() {
+        return player;
+    }
 
     // API method: Return grid reference
     @Override
-    public GridAPI getGrid() { return grid; }
+    public GridAPI getGrid() {
+        return grid;
+    }
 
     // API method: Register a new callback (e.g., from plugin)
     @Override

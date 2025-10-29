@@ -22,6 +22,7 @@ application {
 generateGrammarSource {
     maxHeapSize = '64m'
     arguments += ['-visitor', '-long-messages', '-package', 'edu.curtin.game.parser']
+    outputDirectory = file("${buildDir}/generated-src/antlr/main/edu/curtin/game/parser")
 }
 
 sourceSets {

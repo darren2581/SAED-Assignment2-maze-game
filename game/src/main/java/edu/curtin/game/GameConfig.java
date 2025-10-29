@@ -69,23 +69,43 @@ public class GameConfig {
     }
 
     // Getter: Number of rows
-    public int getRows() { return rows; }
+    public int getRows() {
+        return rows;
+    }
     // Getter: Number of columns
-    public int getCols() { return cols; }
+    public int getCols() {
+        return cols;
+    }
     // Getter: Start row
-    public int getStartRow() { return startRow; }
+    public int getStartRow() {
+        return startRow;
+    }
     // Getter: Start column
-    public int getStartCol() { return startCol; }
+    public int getStartCol() {
+        return startCol;
+    }
     // Getter: Goal row
-    public int getGoalRow() { return goalRow; }
+    public int getGoalRow() {
+        return goalRow;
+    }
     // Getter: Goal column
-    public int getGoalCol() { return goalCol; }
+    public int getGoalCol() {
+        return goalCol;
+    }
     // Getter: Items map (unmodifiable)
-    public Map<String, List<Location>> getItems() { return items; }
+    public Map<String, List<Location>> getItems() {
+        return items;
+    }
     // Getter: Obstacles map (unmodifiable)
-    public Map<Obstacle, List<Location>> getObstacles() { return obstacles; }
+    public Map<Obstacle, List<Location>> getObstacles() {
+        return obstacles;
+    }
     // Getter: Plugins list (unmodifiable)
-    public List<String> getPlugins() { return plugins; }
+    public List<String> getPlugins() {
+        return plugins;
+    }
     // Getter: Scripts list (unmodifiable)
-    public List<String> getScripts() { return scripts; }
+    public List<String> getScripts() {
+        return scripts;
+    }
 }

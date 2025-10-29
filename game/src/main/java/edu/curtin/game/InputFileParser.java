@@ -17,7 +17,7 @@ public class InputFileParser {
         CharStream input = CharStreams.fromFileName(filename, encoding);
 
         // Create lexer to tokenize the input
-        MapFileLexer lexer = new MapFileLexer(input); // Fixed: removed unnecessary FQN
+        MapFileLexer lexer = new MapFileLexer(input);
         // Create token stream from lexer
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         // Create parser with token stream
@@ -116,7 +116,7 @@ public class InputFileParser {
         public Object visitScriptDecl(MapFileParser.ScriptDeclContext ctx) {
             // Extract script block text
             String scriptBlock = ctx.SCRIPT_BLOCK().getText();
-            // Remove delimiters (e.g., <<< >>>) to get raw script
+            // Remove delimiters (<<< >>>) to get raw script
             String script = scriptBlock.substring(2, scriptBlock.length() - 1);
             // Add script to config
             config.addScript(script);
